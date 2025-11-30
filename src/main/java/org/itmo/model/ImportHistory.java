@@ -51,7 +51,7 @@ public class ImportHistory {
     @Column(name = "error_details", columnDefinition = "TEXT")
     private String errorDetails;
 
-    // Новое поле для имени файла в MinIO ...
+
     @Column(name = "file_name")
     private String fileName;
 

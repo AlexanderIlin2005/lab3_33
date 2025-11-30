@@ -14,7 +14,5 @@ public class ImportHistoryResponseDto {
     ImportStatus status;
     Integer addedCount;
     String errorDetails;
-
-    // ✅ ДОБАВЛЕНО:
-    String fileName; // <-- Это поле будет сериализовано в JSON
+    String fileName;
 }

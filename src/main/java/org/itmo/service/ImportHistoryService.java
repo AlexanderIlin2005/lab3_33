@@ -35,10 +35,7 @@ public class ImportHistoryService {
         this.transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
     }
 
-    /**
-     * ✅ Новый метод: Сохраняет историю в новой, независимой транзакции.
-     * Это гарантирует, что запись будет закоммичена, даже если основной импорт откатится.
-     */
+
     public ImportHistory saveHistoryInNewTransaction(ImportHistory history) {
         return transactionTemplate.execute(status -> {
             return historyRepository.save(history);
@@ -65,10 +62,10 @@ public class ImportHistoryService {
         }
     }
 
-    // src/main/java/org/itmo/service/ImportHistoryService.java
+
     public ImportHistory findById(Long id) {
         return historyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Import history not found with id: " + id));
     }
-// Пометьте его как @Transactional(readOnly = true)
+
 }

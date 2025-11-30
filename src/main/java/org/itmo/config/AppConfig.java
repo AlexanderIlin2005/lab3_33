@@ -41,7 +41,7 @@ public class AppConfig {
         return transactionManager;
     }
 
-    // ... существующие бины ...
+
 
     @Value("${minio.url:http://localhost:9000}")
     private String minioUrl;

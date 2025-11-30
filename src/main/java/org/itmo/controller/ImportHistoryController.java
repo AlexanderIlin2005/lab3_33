@@ -35,12 +35,12 @@ public class ImportHistoryController {
 
     private final ImportHistoryService historyService;
 
-    // Добавьте зависимости в контроллер
+
     private final MinioClient minioClient;
     private final String minioBucketName;
 
 
-    // Обновите конструктор
+
     public ImportHistoryController(ImportHistoryService historyService,
                                    MinioClient minioClient, // <-- Новое
                                    String minioBucketName) { // <-- Новое
@@ -60,7 +60,7 @@ public class ImportHistoryController {
         return ResponseEntity.ok(history);
     }
 
-    // Добавьте новый метод
+
     @GetMapping("/{id}/download")
     public void downloadImportFile(@PathVariable Long id, HttpServletResponse response) throws Exception {
         ImportHistory history = historyService.findById(id);
@@ -69,13 +69,13 @@ public class ImportHistoryController {
             return;
         }
 
-        // Устанавливаем заголовки
+
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + history.getFileName() + "\"");
         response.setContentType("application/xml");
         response.setCharacterEncoding("UTF-8");
 
-        // Получаем поток из MinIO и копируем напрямую в ответ
+
         try (InputStream inputStream = minioClient.getObject(
                 GetObjectArgs.builder()
                         .bucket(minioBucketName)

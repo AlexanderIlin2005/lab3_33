@@ -114,7 +114,7 @@ public class MusicBandController {
         return Map.of("numberOfParticipants", newCount);
     }
 
-    // Найдите метод importXml в MusicBandController и замените его на этот
+
     @PostMapping("/import/xml")
     public ResponseEntity<Map<String, Object>> importXml(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
@@ -122,7 +122,7 @@ public class MusicBandController {
         }
 
         try {
-            // Передаем и поток, и оригинальное имя файла
+
             ImportResultDto resultDto = musicBandService.importBandsFromXml(
                     file.getInputStream(),
                     file.getOriginalFilename()
