@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MusicBand Information System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        button { background-color: #007BFF; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; font-size: 14px; }
+        button:hover { background-color: #0056b3; }
+        .controls, .pagination, .special-operations { display: flex; justify-content: space-between; align-items: center; padding: 10px; flex-wrap: wrap; gap: 10px; }
+        .form-group { display: flex; gap: 10px; align-items: center; }
+        input, select, textarea { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 8px; }
+        .modal-content form { display: flex; flex-direction: column; gap: 10px; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+
+
+        .main-nav { background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+        .main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 20px; }
+        .main-nav a { text-decoration: none; color: #333; padding: 8px 16px; border-radius: 4px; transition: background-color 0.3s; }
+        .main-nav a.active, .main-nav a:hover { background-color: #007BFF; color: white; }
+
+        .operation-group { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .operation-form { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+
+        .btn-danger { background-color: #dc3545; }
+        .btn-danger:hover { background-color: #c82333; }
+        .btn-warning { background-color: #ffc107; color: #212529; }
+        .btn-warning:hover { background-color: #e0a800; }
+        .btn-info { background-color: #17a2b8; }
+        .btn-info:hover { background-color: #138496; }
+        .btn-success { background-color: #28a745; }
+        .btn-success:hover { background-color: #218838; }
+
+        .results-container { margin-top: 15px; padding: 15px; border-radius: 5px; text-align: left; }
+        .success-message { background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; border: 1px solid #c3e6cb; }
+        .error-message { background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; border: 1px solid #f5c6cb; }
+        .info-message { background-color: #d1ecf1; color: #0c5460; padding: 10px; border-radius: 4px; border: 1px solid #bee5eb; }
+
+        .field-error { color: #dc3545; font-size: 0.8em; margin-top: 5px; }
+        input.error { border-color: #dc3545; }
+
+
+        #login-section {
+            padding: 50px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #login-forms-container {
+            display: flex; /* НОВОЕ */
+            gap: 30px; /* НОВОЕ */
+        }
+        #login-form, #register-form { /* ИЗМЕНЕНО: Добавлен #register-form */
+            margin-top: 20px;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 350px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+        #app-content { display: none; }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .text-danger {
+            color: #dc3545;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .text-danger:hover {
+            color: #a71d2a;
+            text-decoration: underline;
+        }
+
+
+        .user-hidden { display: none; }
+        .user-visible { display: block; }
+
+        /* НОВОЕ */
+        .admin-nav-item {
+            display: none; /* Управляется JS */
+        }
+        /* /НОВОЕ */
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div id="login-section" style="display: flex;">
+        <h2>Система аутентификации</h2>
+        <div id="login-error-message" class="error-message" style="display:none; margin-bottom: 15px;"></div>
+
+        <div id="login-forms-container">
+
+            <form id="login-form" onsubmit="attemptLogin(event)">
+                <h3>Вход</h3>
+                <input type="text" id="login-username" placeholder="Логин" required>
+                <input type="password" id="login-password" placeholder="Пароль" required>
+                <button type="submit" class="btn-success">Войти</button>
+            </form>
+
+            <form id="register-form" onsubmit="attemptRegister(event)">
+                <h3>Регистрация</h3>
+                <input type="text" id="reg-username" placeholder="Логин" required>
+                <input type="password" id="reg-password" placeholder="Пароль" required>
+                <button type="submit" class="btn-info">Зарегистрироваться</button>
+                <div id="register-message" class="info-message" style="display:none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-content">
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#bands-section" class="nav-link active">Music Bands</a></li>
+                <li><a href="#studios-section" class="nav-link">Studios</a></li>
+                <li><a href="#albums-section" class="nav-link">Albums</a></li>
+                <li id="nav-operations-link"><a href="#operations-section" class="nav-link">Special Operations</a></li>
+                <li class="admin-nav-item"><a href="#user-management-section" class="nav-link">Управление Пользователями</a></li> <li><a href="#history-section" class="nav-link">Import History</a></li>
+                <li style="margin-left: auto;"><button onclick="logout()" class="btn-danger" style="padding: 5px 10px;">Выход</button></li>
+            </ul>
+        </nav>
+
+        <h1>MusicBand Information System</h1>
+
+        <div id="bands-section" class="section active">
+            <div class="controls">
+                <div class="form-group">
+                    <input type="text" id="filterName" placeholder="Filter by exact name...">
+                    <select id="sortField">
+                        <option value="id">Sort by ID</option>
+                        <option value="name">Sort by Name</option>
+                        <option value="establishmentDate">Sort by Establishment Date</option>
+                    </select>
+                    <select id="sortOrder">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                    <button onclick="applyFiltersAndSort()">Apply</button>
+                </div>
+                <button onclick="openCreateModal()" class="btn-success admin-only">Create New Band</button>
+            </div>
+
+            <table id="bandsTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Genre</th>
+                    <th>Participants</th>
+                    <th>Albums</th>
+                    <th>Studio</th>
+                    <th>Establishment</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="pagination">
+                <button id="prevPage" onclick="changePage(-1)">Previous</button>
+                <span id="pageInfo">Page 1 of 1</span>
+                <button id="nextPage" onclick="changePage(1)">Next</button>
+            </div>
+        </div>
+
+        <div id="studios-section" class="section">
+            <h2>Studio Management</h2>
+
+            <div class="controls">
+                <div class="form-group">
+                    <input type="text" id="studioFilter" placeholder="Filter studios...">
+                    <button onclick="loadStudios()">Filter</button>
+                </div>
+                <button onclick="openCreateStudioModal()" class="btn-success admin-only">Create New Studio</button>
+            </div>
+
+            <table id="studiosTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="pagination">
+                <button id="prevStudioPage" onclick="changeStudioPage(-1)">Previous</button>
+                <span id="studioPageInfo">Page 1 of 1</span>
+                <button id="nextStudioPage" onclick="changeStudioPage(1)">Next</button>
+            </div>
+        </div>
+
+        <div id="albums-section" class="section">
+            <h2>Albums Management</h2>
+            <div class="controls">
+                <div class="form-group">
+                </div>
+                <button onclick="openCreateAlbumModal()" class="btn-success admin-only">Create New Album</button>
+            </div>
+
+            <table id="albumsTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Tracks</th>
+                    <th>Length (min)</th>
+                    <th>Sales (M)</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <button id="prevAlbumPage" onclick="changeAlbumPage(-1)">Previous</button>
+                <span id="albumPageInfo">Page 1 of 1</span>
+                <button id="nextAlbumPage" onclick="changeAlbumPage(1)">Next</button>
+            </div>
+        </div>
+
+        <div id="user-management-section" class="section">
+            <h2>Управление Пользователями</h2>
+            <div id="userManagementMessage" class="results-container"></div>
+            <button onclick="loadAllUsers()" class="btn-info" style="margin-bottom: 15px;">Обновить Список Пользователей</button>
+            <table id="usersTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Роль</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td colspan="4">Нажмите "Обновить Список Пользователей" для загрузки.</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="operations-section" class="section">
+            <h2>Special Operations</h2>
+            <div id="results" class="results-container">Operation results will be shown here.</div>
+
+            <div class="special-operations">
+                <div class="operation-group user-hidden">
+                    <h4>Delete Operations</h4>
+                    <form onsubmit="handleDeleteByStudio(event)" class="operation-form">
+                        <select id="studioNameToDelete" required>
+                            <option value="">Select Studio to Delete From</option>
+                        </select>
+                        <button type="submit" class="btn-danger">Delete One by Studio</button>
+                    </form>
+                </div>
+
+                <div class="operation-group user-hidden">
+                    <h4>Statistics</h4>
+                    <button onclick="handleAverageAlbums()" class="btn-info">Get Average Album Count</button>
+                    <form onsubmit="handleCountStudio(event)" class="operation-form">
+                        <select id="studioNameToCount" required>
+                            <option value="">Select Studio to Compare</option>
+                        </select>
+                        <button type="submit" class="btn-info">Count Bands (Studio > Name)</button>
+                    </form>
+                </div>
+
+                <div class="operation-group user-hidden">
+                    <h4>Search & Modify</h4>
+                    <form onsubmit="handleFindByGenre(event)" class="operation-form">
+                        <select id="genreToFind" required>
+                            <option value="">Select Genre</option>
+                            <option value="ROCK">ROCK</option>
+                            <option value="PSYCHEDELIC_CLOUD_RAP">PSYCHEDELIC_CLOUD_RAP</option>
+                            <option value="POP">POP</option>
+                            <option value="PUNK_ROCK">PUNK_ROCK</option>
+                            <option value="BRIT_POP">BRIT_POP</option>
+                        </select>
+                        <button type="submit" class="btn-info">Find by Genre</button>
+                    </form>
+                    <form onsubmit="handleRemoveParticipant(event)" class="operation-form">
+                        <input type="number" id="bandIdToRemoveFrom" placeholder="Band ID" min="1" required>
+                        <button type="submit" class="btn-warning">Remove Participant</button>
+                    </form>
+                </div>
+
+                <div class="operation-group">
+                    <h4>Bulk Import XML 📂</h4>
+                    <form id="xmlImportForm" class="operation-form" enctype="multipart/form-data">
+                        <input type="file" id="xmlFile" name="file" accept=".xml" required>
+                        <button type="submit" class="btn-success">Import XML</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="history-section" class="section">
+            <h2>Import History</h2>
+            <div id="historyControls" class="controls" style="justify-content: flex-start; gap: 20px;">
+                <button onclick="loadImportHistory()">Обновить историю</button>
+            </div>
+
+            <table id="importHistoryTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Запустил</th>
+                    <th>Время начала</th>
+                    <th>Статус</th>
+                    <th>Добавлено объектов</th>
+                    <th>Детали ошибки</th>
+                    <th>Файл</th> <!-- Добавьте эту строку -->
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td colspan="6">Нажмите "Обновить историю" для загрузки.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="bandModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Create New Band</h2>
+            <div id="modalFormErrors" class="error-message" style="display:none; margin-bottom: 15px;"></div>
+            <form id="bandForm" onsubmit="handleFormSubmit(event)">
+                <input type="hidden" id="bandId">
+                <label>Name: <input type="text" id="name" required></label>
+                <label>Genre:
+                    <select id="genre" required>
+                        <option value="ROCK">ROCK</option>
+                        <option value="PSYCHEDELIC_CLOUD_RAP">PSYCHEDELIC_CLOUD_RAP</option>
+                        <option value="POP">POP</option>
+                        <option value="PUNK_ROCK">PUNK_ROCK</option>
+                        <option value="BRIT_POP">BRIT_POP</option>
+                    </select>
+                </label>
+                <label>Participants: <input type="number" id="numberOfParticipants" min="1" required></label>
+                <label>Singles Count: <input type="number" id="singleCount" min="1"></label>
+                <label>Description: <textarea id="description"></textarea></label>
+                <label>Album Count: <input type="number" id="albumCount" min="1" required></label>
+                <label>Establishment Date: <input type="datetime-local" id="establishmentDate" required></label>
+                <hr>
+                <h4>Coordinates</h4>
+                <label>X: <input type="number" step="any" id="coordinatesX" max="931" required></label>
+                <label>Y: <input type="number" id="coordinatesY" required></label>
+                <hr>
+                <h4>Associated Entities</h4>
+
+                <label>Best Album:
+                    <select id="bestAlbumId">
+                        <option value="">No Best Album</option>
+                    </select>
+                </label>
+                <label>Studio:
+                    <select id="studioId">
+                        <option value="">No Studio</option>
+                    </select>
+                </label>
+
+                <button type="submit" id="submitButton">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="studioModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeStudioModal()">&times;</span>
+            <h2 id="studioModalTitle">Create New Studio</h2>
+            <form id="studioForm" onsubmit="handleStudioFormSubmit(event)">
+                <input type="hidden" id="studioModalId">
+                <label>Studio Name: <input type="text" id="studioName" required></label>
+                <button type="submit" id="studioSubmitButton">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="bandDetailsModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close" onclick="document.getElementById('bandDetailsModal').style.display='none'">&times;</span>
+            <h2 id="bandDetailsModalTitle">Band Details</h2>
+            <div id="bandDetailsModalBody" style="text-align: left;">
+            </div>
+            <button onclick="document.getElementById('bandDetailsModal').style.display='none'" style="margin-top: 20px;">Close</button>
+        </div>
+    </div>
+
+    <div id="albumModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAlbumModal()">&times;</span>
+            <h2 id="albumModalTitle">Create New Album</h2>
+            <form id="albumForm" onsubmit="handleAlbumFormSubmit(event)">
+                <input type="hidden" id="albumModalId">
+                <label>Album Name: <input type="text" id="albumName" required></label>
+                <label>Tracks: <input type="number" id="albumTracks" min="1" required></label>
+                <label>Length (in minutes): <input type="number" id="albumLength" min="1" required></label>
+                <label>Sales (Millions): <input type="number" id="albumSales" step="0.01" min="0"></label>
+                <button type="submit" id="albumSubmitButton">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script>
+        // --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ АУТЕНТИФИКАЦИИ ---
+        let CURRENT_USER_ROLE = null;
+        let CURRENT_USERNAME = null;
+        let CURRENT_PASSWORD = null;
+        // ---------------------------------------------
+
+        let currentPage = 0;
+        let totalPages = 1;
+        let currentStudioPage = 0;
+        let totalStudioPages = 1;
+        let currentAlbumPage = 0;
+        let totalAlbumPages = 1;
+        let currentSortField = 'id';
+        let currentSortOrder = 'asc';
+        let currentFilterName = '';
+        let studios = [];
+        let albums = [];
+        let stompClient = null;
+
+        const API_URL = '/api/music-bands';
+        const STUDIO_API_URL = '/api/studios';
+        const ALBUM_API_URL = '/api/albums';
+        const XML_IMPORT_URL = `${API_URL}/import/xml`;
+        const IMPORT_HISTORY_API_URL = '/api/import-history';
+        const WHOAMI_URL = '/api/users/me';
+        const REGISTER_URL = '/api/auth/register'; // НОВОЕ
+        const USERS_API_URL = '/api/users'; // НОВОЕ
+
+        const resultsDiv = document.getElementById('results');
+        const modal = document.getElementById('bandModal');
+
+        // =========================================================================
+        //                      ФУНКЦИИ АУТЕНТИФИКАЦИИ
+        // =========================================================================
+
+        function getAuthHeaders(contentType = 'application/json') {
+            if (!CURRENT_USERNAME || !CURRENT_PASSWORD) {
+                // Возвращаем только Content-Type для неавторизованных запросов (например, регистрации)
+                return { 'Content-Type': contentType };
+            }
+            const credentials = btoa(`${CURRENT_USERNAME}:${CURRENT_PASSWORD}`);
+            const headers = {
+                'Authorization': `Basic ${credentials}`,
+            };
+            if (contentType !== 'multipart/form-data') {
+                 headers['Content-Type'] = contentType;
+            }
+            return headers;
+        }
+
+        function showLoginError(message) {
+            const errorDiv = document.getElementById('login-error-message');
+            errorDiv.textContent = `❌ ${message}`;
+            errorDiv.style.display = 'block';
+        }
+
+        function clearLoginError() {
+            document.getElementById('login-error-message').style.display = 'none';
+        }
+
+        function showRegisterMessage(message, isError = false) { // НОВОЕ
+            const messageDiv = document.getElementById('register-message');
+            messageDiv.textContent = isError ? `❌ ${message}` : `✅ ${message}`;
+            messageDiv.className = isError ? 'error-message' : 'success-message';
+            messageDiv.style.display = 'block';
+            setTimeout(() => { messageDiv.style.display = 'none'; }, 5000);
+        }
+
+        function setAuthState(username, password, role) {
+            CURRENT_USERNAME = username;
+            CURRENT_PASSWORD = password;
+            CURRENT_USER_ROLE = role;
+
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+
+            updateUIForRole();
+            loadBands();
+            loadStudios();
+            loadAlbums();
+            loadStudioSelects();
+            loadImportHistory();
+            connectToWebSocket();
+        }
+
+        function logout() {
+            CURRENT_USERNAME = null;
+            CURRENT_PASSWORD = null;
+            CURRENT_USER_ROLE = null;
+
+            // 🟢 Удаляем данные из sessionStorage
+            sessionStorage.removeItem('username');
+            sessionStorage.removeItem('password');
+            sessionStorage.removeItem('role');
+
+            if (stompClient && stompClient.connected) {
+                stompClient.disconnect();
+            }
+
+            document.getElementById('login-section').style.display = 'flex';
+            document.getElementById('app-content').style.display = 'none';
+            clearLoginError();
+            showInfo('Вы вышли из системы.');
+            document.getElementById('login-form').reset();
+            document.getElementById('register-form').reset(); // НОВОЕ
+        }
+
+        async function attemptLogin(event) {
+            event.preventDefault();
+            clearLoginError();
+
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const tempCredentials = btoa(`${username}:${password}`);
+                const response = await fetch(WHOAMI_URL, {
+                    method: 'GET',
+                    headers: { 'Authorization': `Basic ${tempCredentials}` }
+                });
+
+                if (response.status === 401) {
+                    showLoginError('Неверный логин или пароль.');
+                    return;
+                }
+
+                if (!response.ok) {
+                    showLoginError('Ошибка сервера при входе.');
+                    return;
+                }
+
+                const userData = await response.json();
+                const role = userData.role;
+
+                if (!role) {
+                    showLoginError('Ошибка: не удалось получить роль пользователя.');
+                    return;
+                }
+
+                // 🟢 Сохраняем учетные данные и роль в sessionStorage
+                sessionStorage.setItem('username', username);
+                sessionStorage.setItem('password', password);
+                sessionStorage.setItem('role', role);
+
+                setAuthState(username, password, role);
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showLoginError('Ошибка подключения к серверу или получения данных.');
+            }
+        }
+
+        // НОВАЯ ФУНКЦИЯ РЕГИСТРАЦИИ
+        async function attemptRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const password = document.getElementById('reg-password').value;
+            document.getElementById('register-message').style.display = 'none';
+
+            if (!username || !password) {
+                showRegisterMessage('Введите логин и пароль.', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(REGISTER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.status === 201) {
+                    showRegisterMessage('Регистрация успешна! Теперь вы можете войти.', false);
+                    document.getElementById('reg-username').value = '';
+                    document.getElementById('reg-password').value = '';
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    const errorMessage = errorData.message || `Ошибка регистрации: ${response.status} ${response.statusText}`;
+                    showRegisterMessage(errorMessage, true);
+                }
+            } catch (error) {
+                showRegisterMessage(`Сетевая ошибка: ${error.message}`, true);
+            }
+        }
+        // /НОВАЯ ФУНКЦИЯ РЕГИСТРАЦИИ
+
+        function initializeAuthOnReload() {
+            const savedUsername = sessionStorage.getItem('username');
+            const savedPassword = sessionStorage.getItem('password');
+            const savedRole = sessionStorage.getItem('role');
+
+            if (savedUsername && savedPassword && savedRole) {
+                // Если данные найдены, восстанавливаем состояние и UI
+                CURRENT_USERNAME = savedUsername;
+                CURRENT_PASSWORD = savedPassword;
+                CURRENT_USER_ROLE = savedRole;
+
+                // Восстанавливаем приложение (вызываем setAuthState напрямую, но без перезагрузки)
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+
+                updateUIForRole();
+                loadBands();
+                loadStudios();
+                loadAlbums();
+                loadStudioSelects();
+                loadImportHistory();
+                connectToWebSocket();
+                showInfo(`Состояние восстановлено для пользователя: ${savedUsername} (${savedRole})`);
+            } else {
+                // Если данных нет, показываем форму входа
+                document.getElementById('login-section').style.display = 'flex';
+                document.getElementById('app-content').style.display = 'none';
+            }
+        }
+
+        // =========================================================================
+        //                      ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        // =========================================================================
+
+        function connectToWebSocket() {
+            if (stompClient && stompClient.connected) {
+                stompClient.disconnect();
+            }
+
+            const socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, (frame) => {
+                console.log('Connected to WebSocket: ' + frame);
+
+                stompClient.subscribe('/topic/bands/updates', (message) => {
+                    console.log("Received update notification: ", message.body);
+                    loadBands();
+                    loadStudioSelects();
+                    showInfo("Данные обновлены на другой вкладке/клиенте.");
+                });
+
+            }, (error) => {
+                console.error('WebSocket connection error. Retrying in 5 seconds...', error);
+                setTimeout(connectToWebSocket, 5000);
+            });
+        }
+
+        function updateUIForRole() {
+            const isAdmin = CURRENT_USER_ROLE === 'ADMIN';
+
+            // Управление видимостью admin-only элементов
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = isAdmin ? '' : 'none';
+            });
+
+            // Управление видимостью операций для администраторов
+            document.querySelectorAll('.user-hidden').forEach(el => {
+                el.style.display = isAdmin ? 'block' : 'none';
+            });
+
+            // НОВОЕ: Управление видимостью навигационной ссылки "Управление Пользователями"
+            document.querySelectorAll('.admin-nav-item').forEach(el => {
+                el.style.display = isAdmin ? 'list-item' : 'none';
+            });
+
+            // Перезагрузка таблиц для обновления ссылок "Edit/Delete"
+            loadBands();
+            loadStudios();
+            loadAlbums();
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
+
+            if (sectionId === 'studios-section') { loadStudios(); }
+            if (sectionId === 'operations-section') { loadStudioSelects(); }
+            if (sectionId === 'history-section') { loadImportHistory(); }
+            if (sectionId === 'user-management-section') { loadAllUsers(); } // НОВОЕ
+        }
+
+        function showError(message) {
+            if (modal && modal.style.display === 'block') {
+                const modalErrors = document.getElementById('modalFormErrors');
+                if (modalErrors) {
+                    modalErrors.innerHTML = `❌ Error: ${message}`;
+                    modalErrors.style.display = 'block';
+                    return;
+                }
+            }
+            resultsDiv.innerHTML = `<div class="error-message">❌ ${message}</div>`;
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showSuccess(message) {
+            resultsDiv.innerHTML = `<div class="success-message">✅ ${message}</div>`;
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showInfo(message) {
+            resultsDiv.innerHTML = `<div class="info-message">ℹ️ ${message}</div>`;
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function clearFormErrors() {
+            const modalErrors = document.getElementById('modalFormErrors');
+            if (modalErrors) modalErrors.style.display = 'none';
+            document.querySelectorAll('.field-error').forEach(el => el.remove());
+            document.querySelectorAll('input.error, select.error, textarea.error').forEach(el => el.classList.remove('error'));
+        }
+
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+
+            field.classList.add('error');
+
+            let errorEl = document.querySelector(`.field-error[data-field="${fieldId}"]`);
+            if (!errorEl) {
+                errorEl = document.createElement('div');
+                errorEl.className = 'field-error';
+                errorEl.setAttribute('data-field', fieldId);
+                field.parentNode.appendChild(errorEl);
+            }
+            errorEl.textContent = message;
+        }
+
+        // --- Band Modal Functions ---
+
+        function openCreateModal() {
+            clearFormErrors();
+            document.getElementById('bandForm').reset();
+            document.getElementById('bandId').value = '';
+            document.getElementById('modalTitle').textContent = 'Create New Band';
+            document.getElementById('submitButton').textContent = 'Create';
+            loadStudioSelects();
+            loadAlbumSelects();
+            document.getElementById('bandModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('bandModal').style.display = 'none';
+        }
+
+        function openEditModal(id) {
+            clearFormErrors();
+            fetch(`${API_URL}/${id}`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (res.status === 404) throw new Error('Band not found.');
+                    return res.json();
+                })
+                .then(band => {
+                    document.getElementById('bandId').value = band.id;
+                    document.getElementById('name').value = band.name;
+                    document.getElementById('genre').value = band.genre;
+                    document.getElementById('numberOfParticipants').value = band.numberOfParticipants;
+                    document.getElementById('singleCount').value = band.singleCount || '';
+                    document.getElementById('description').value = band.description || '';
+                    document.getElementById('albumCount').value = band.albumCount;
+
+                    const date = new Date(band.establishmentDate * 1000);
+                    const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+                    document.getElementById('establishmentDate').value = localDate;
+
+                    document.getElementById('coordinatesX').value = band.coordinates.x;
+                    document.getElementById('coordinatesY').value = band.coordinates.y;
+
+                    loadStudioSelects(band.studio ? band.studio.id : null);
+                    loadAlbumSelects(band.bestAlbum ? band.bestAlbum.id : null);
+
+                    document.getElementById('modalTitle').textContent = `Edit Band #${band.id}`;
+                    document.getElementById('submitButton').textContent = 'Update';
+                    document.getElementById('bandModal').style.display = 'block';
+                })
+                .catch(error => showError('Error loading band: ' + error.message));
+        }
+
+        // --- Studio Modal Functions ---
+
+        function openCreateStudioModal() {
+            closeStudioModal();
+            document.getElementById('studioModal').style.display = 'block';
+        }
+
+        function closeStudioModal() {
+            document.getElementById('studioModal').style.display = 'none';
+            document.getElementById('studioForm').reset();
+            document.getElementById('studioModalId').value = '';
+            document.getElementById('studioModalTitle').textContent = 'Create New Studio';
+            document.getElementById('studioSubmitButton').textContent = 'Create';
+        }
+
+        function openEditStudioModal(id) {
+            fetch(`${STUDIO_API_URL}/${id}`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Studio not found');
+                    return res.json();
+                })
+                .then(studio => {
+                    document.getElementById('studioModalId').value = studio.id;
+                    document.getElementById('studioName').value = studio.name;
+                    document.getElementById('studioModalTitle').textContent = `Edit Studio #${studio.id}`;
+                    document.getElementById('studioSubmitButton').textContent = 'Update';
+                    document.getElementById('studioModal').style.display = 'block';
+                })
+                .catch(error => showError('Error loading studio: ' + error.message));
+        }
+
+        // --- Album Modal Functions ---
+
+        function openCreateAlbumModal() {
+            closeAlbumModal();
+            document.getElementById('albumModal').style.display = 'block';
+        }
+
+        function closeAlbumModal() {
+            document.getElementById('albumModal').style.display = 'none';
+            document.getElementById('albumForm').reset();
+            document.getElementById('albumModalId').value = '';
+            document.getElementById('albumModalTitle').textContent = 'Create New Album';
+            document.getElementById('albumSubmitButton').textContent = 'Create';
+        }
+
+        function openEditAlbumModal(id) {
+            fetch(`${ALBUM_API_URL}/${id}`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Album not found');
+                    return res.json();
+                })
+                .then(album => {
+                    document.getElementById('albumModalId').value = album.id;
+                    document.getElementById('albumName').value = album.name;
+                    document.getElementById('albumTracks').value = album.tracks;
+                    document.getElementById('albumLength').value = album.length;
+                    document.getElementById('albumSales').value = album.sales;
+
+                    document.getElementById('albumModalTitle').textContent = `Edit Album #${album.id}`;
+                    document.getElementById('albumSubmitButton').textContent = 'Update';
+                    document.getElementById('albumModal').style.display = 'block';
+                })
+                .catch(error => showError('Error loading album: ' + error.message));
+        }
+
+        // --- Initialization ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = link.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                });
+            });
+
+            // Запускаем восстановление аутентификации при загрузке страницы
+            initializeAuthOnReload();
+
+            const xmlImportForm = document.getElementById('xmlImportForm');
+            if (xmlImportForm) {
+                xmlImportForm.addEventListener('submit', handleXmlImport);
+            }
+
+            document.querySelector('a[href="#history-section"]').addEventListener('click', () => {
+                loadImportHistory();
+            });
+        });
+
+        // =========================================================================
+        //                       CRUD и API ФУНКЦИИ
+        // =========================================================================
+
+        function loadStudioSelects(selectedId = null) {
+            fetch(STUDIO_API_URL, { headers: getAuthHeaders() })
+                .then(response => response.json())
+                .then(data => {
+                    studios = data;
+                    const studioSelect = document.getElementById('studioId');
+                    const studioDeleteSelect = document.getElementById('studioNameToDelete');
+                    const studioCountSelect = document.getElementById('studioNameToCount');
+
+                    [studioSelect, studioDeleteSelect, studioCountSelect].forEach(select => {
+                        if (!select) return;
+                        select.innerHTML = select === studioSelect ? '<option value="">No Studio</option>' : '<option value="">Select Studio</option>';
+
+                        studios.forEach(studio => {
+                            const option = document.createElement('option');
+                            option.value = studio.name;
+                            option.textContent = studio.name;
+                            if (select === studioSelect) {
+                                // For the band creation modal, we need the ID as value
+                                option.value = studio.id;
+                            } else if (select === studioSelect && selectedId === studio.id) {
+                                option.selected = true;
+                            } else if (select !== studioSelect) {
+                                // For special ops, the value should be the name
+                                option.value = studio.name;
+                            }
+                            select.appendChild(option);
+                        });
+                    });
+
+                    // Fix: Set the correct selected ID for the main form after options are populated
+                    if (studioSelect && selectedId !== null) {
+                        studioSelect.value = selectedId;
+                    }
+                })
+                .catch(error => console.error('Error loading studios:', error));
+        }
+
+
+        function loadAlbumSelects(selectedId = null) {
+            fetch(ALBUM_API_URL, { headers: getAuthHeaders() })
+                .then(response => response.json())
+                .then(data => {
+                    albums = data.content || [];
+                    const albumSelect = document.getElementById('bestAlbumId');
+                    if (!albumSelect) return;
+
+                    albumSelect.innerHTML = '<option value="">No Best Album</option>';
+
+                    albums.forEach(album => {
+                        const option = document.createElement('option');
+                        option.value = album.id;
+                        option.textContent = `${album.name} (ID: ${album.id})`;
+                        if (selectedId === album.id) {
+                            option.selected = true;
+                        }
+                        albumSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error loading albums:', error));
+        }
+
+        function buildApiUrl() {
+            return `${API_URL}?page=${currentPage}&size=10&sort=${currentSortField},${currentSortOrder}&nameEquals=${encodeURIComponent(currentFilterName)}`;
+        }
+
+        function applyFiltersAndSort() {
+            currentFilterName = document.getElementById('filterName').value;
+            currentSortField = document.getElementById('sortField').value;
+            currentSortOrder = document.getElementById('sortOrder').value;
+            currentPage = 0;
+            loadBands();
+        }
+
+        function changePage(delta) {
+            const newPage = currentPage + delta;
+            if (newPage >= 0 && newPage < totalPages) {
+                currentPage = newPage;
+                loadBands();
+            }
+        }
+
+        function loadBands() {
+            fetch(buildApiUrl(), { headers: getAuthHeaders() })
+                .then(response => {
+                    if (response.status === 401) throw new Error("Unauthorized. Please log in.");
+                    return response.json();
+                })
+                .then(data => {
+                    const tableBody = document.querySelector('#bandsTable tbody');
+                    tableBody.innerHTML = '';
+
+                    const isAdmin = CURRENT_USER_ROLE === 'ADMIN';
+                    const bands = data.content || [];
+
+                    bands.forEach(band => {
+                        const editLink = isAdmin
+                            ? `<a href="#" onclick="openEditModal(${band.id})">Edit</a>`
+                            : `<span style="color: #aaa;">Edit</span>`;
+
+                        const deleteLink = isAdmin
+                            ? `<a href="#" onclick="deleteBand(${band.id})" class="text-danger">Delete</a>`
+                            : `<span style="color: #aaa;">Delete</span>`;
+
+                        const row = tableBody.insertRow();
+                        const establishmentTimestamp = band.establishmentDate;
+                        const dateToDisplay = (typeof establishmentTimestamp === 'number')
+                            ? new Date(establishmentTimestamp * 1000).toLocaleDateString('ru-RU', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit'
+                            })
+                            : 'N/A';
+
+                        row.innerHTML = `
+                            <td>${band.id}</td>
+                            <td>
+                                <span style="cursor: pointer; color: #007BFF; text-decoration: underline;"
+                                      onclick="showBandDetails(${band.id})">${band.name}</span>
+                            </td>
+                            <td>${band.genre}</td>
+                            <td>${band.numberOfParticipants}</td>
+                            <td>${band.albumCount}</td>
+                            <td>${band.studio ? band.studio.name : 'No Studio'}</td>
+                            <td>${dateToDisplay}</td>
+                            <td>
+                                ${editLink}
+                                |
+                                ${deleteLink}
+                            </td>
+                        `;
+                    });
+                    currentPage = data.number;
+                    totalPages = data.totalPages;
+                    document.getElementById('pageInfo').textContent = `Page ${currentPage + 1} of ${totalPages}`;
+                    document.getElementById('prevPage').disabled = data.first;
+                    document.getElementById('nextPage').disabled = data.last;
+                })
+                .catch(error => {
+                    console.error('Error loading bands:', error);
+                    document.querySelector('#bandsTable tbody').innerHTML = `<tr><td colspan="8" style="color: red;">Ошибка загрузки данных: ${error.message}</td></tr>`;
+                });
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const requiredFields = ['name', 'numberOfParticipants', 'albumCount', 'establishmentDate', 'coordinatesX', 'coordinatesY'];
+            clearFormErrors();
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (!element.value.trim()) {
+                    showFieldError(field, 'This field is required');
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            clearFormErrors();
+
+            if (!validateForm()) {
+                showError('Please fill all required fields correctly.');
+                return;
+            }
+
+            const bandId = document.getElementById('bandId').value;
+            const method = bandId ? 'PATCH' : 'POST';
+            const url = bandId ? `${API_URL}/${bandId}` : API_URL;
+
+            // Converting datetime-local to ISO-8601 (which the backend will parse)
+            const establishmentDateInput = document.getElementById('establishmentDate').value;
+            const establishmentDate = establishmentDateInput ? new Date(establishmentDateInput).toISOString() : null;
+
+            const studioId = document.getElementById('studioId').value;
+            const bestAlbumId = document.getElementById('bestAlbumId').value;
+
+            const formData = {
+                name: document.getElementById('name').value,
+                genre: document.getElementById('genre').value,
+                numberOfParticipants: parseInt(document.getElementById('numberOfParticipants').value),
+                singleCount: document.getElementById('singleCount').value ? parseInt(document.getElementById('singleCount').value) : null,
+                description: document.getElementById('description').value || null,
+                albumCount: parseInt(document.getElementById('albumCount').value),
+                establishmentDate: establishmentDate,
+                coordinates: {
+                    x: parseFloat(document.getElementById('coordinatesX').value),
+                    y: parseInt(document.getElementById('coordinatesY').value)
+                },
+                bestAlbum: bestAlbumId ? { id: parseInt(bestAlbumId) } : null,
+                studio: studioId ? { id: parseInt(studioId) } : null,
+            };
+
+            fetch(url, {
+                method: method,
+                headers: getAuthHeaders(),
+                body: JSON.stringify(formData)
+            })
+            .then(async response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Submission failed!');
+                    });
+                }
+                return response.json();
+            })
+            .then((data) => {
+                showSuccess(`Band ${bandId ? 'updated' : 'created'} successfully!`);
+                closeModal();
+                loadBands();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                try {
+                    const errorText = error.message;
+                    const errorData = JSON.parse(errorText);
+
+                    if (errorData.errors && Array.isArray(errorData.errors)) {
+                        errorData.errors.forEach(err => {
+                            // Spring Validation error structure
+                            showFieldError(err.field, err.defaultMessage);
+                        });
+                        showError('Please correct the validation errors above.');
+                    } else if (errorData.message) {
+                        showError('Error: ' + errorData.message);
+                    } else {
+                        showError('Error: ' + errorText);
+                    }
+                } catch (e) {
+                    showError('Server Error: ' + error.message);
+                }
+            });
+        }
+
+        function deleteBand(id) {
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            if (confirm(`Are you sure you want to delete band with ID ${id}?`)) {
+                fetch(`${API_URL}/${id}`, { method: 'DELETE', headers: getAuthHeaders() })
+                    .then(response => {
+                        if (response.ok) {
+                            showSuccess('Band deleted successfully!');
+                            loadBands();
+                        } else {
+                            throw new Error('Failed to delete band.');
+                        }
+                    })
+                    .catch(error => showError(error.message));
+            }
+        }
+
+        function showBandDetails(id) {
+            fetch(`${API_URL}/${id}`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Band not found or network error');
+                    return res.json();
+                })
+                .then(band => {
+                    const establishmentDate = band.establishmentDate
+                        ? new Date(band.establishmentDate * 1000).toLocaleString('ru-RU')
+                        : 'N/A';
+
+                    const detailsBody = document.getElementById('bandDetailsModalBody');
+                    detailsBody.innerHTML = `
+                        <p><strong>ID:</strong> ${band.id}</p>
+                        <p><strong>Name:</strong> ${band.name}</p>
+                        <p><strong>Genre:</strong> ${band.genre}</p>
+                        <p><strong>Participants:</strong> ${band.numberOfParticipants}</p>
+                        <p><strong>Albums:</strong> ${band.albumCount}</p>
+                        <p><strong>Studio:</strong> ${band.studio ? band.studio.name : 'No Studio'}</p>
+                        <p><strong>Established:</strong> ${establishmentDate}</p>
+                        <p><strong>Coordinates:</strong> X=${band.coordinates.x}, Y=${band.coordinates.y}</p>
+                        <p><strong>Best Album:</strong> ${band.bestAlbum ? band.bestAlbum.name : 'N/A'}</p>
+                        <p><strong>Description:</strong> ${band.description || 'Нет'}</p>
+                        <p><strong>Singles Count:</strong> ${band.singleCount || '0'}</p>
+                    `;
+                    document.getElementById('bandDetailsModalTitle').textContent = `Details for ${band.name}`;
+                    document.getElementById('bandDetailsModal').style.display = 'block';
+                })
+                .catch(error => showError('Error loading band details: ' + error.message));
+        }
+
+        // --- Studio CRUD ---
+
+        function loadStudios() {
+            const filter = document.getElementById('studioFilter')?.value || '';
+            let url = STUDIO_API_URL;
+            if (filter) {
+                url += `?name=${encodeURIComponent(filter)}`;
+            }
+
+            fetch(url, { headers: getAuthHeaders() })
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#studiosTable tbody');
+                    tableBody.innerHTML = '';
+
+                    const isAdmin = CURRENT_USER_ROLE === 'ADMIN';
+
+                    if (Array.isArray(data)) {
+                        data.forEach(studio => {
+                            const editLink = isAdmin
+                                ? `<a href="#" onclick="openEditStudioModal(${studio.id})">Edit</a>`
+                                : `<span style="color: #aaa;">Edit</span>`;
+
+                            const deleteLink = isAdmin
+                                ? `<a href="#" onclick="deleteStudio(${studio.id})" class="text-danger">Delete</a>`
+                                : `<span style="color: #aaa;">Delete</span>`;
+
+                            const row = tableBody.insertRow();
+                            row.innerHTML = `
+                                <td>${studio.id}</td>
+                                <td>${studio.name}</td>
+                                <td>
+                                    ${editLink}
+                                    |
+                                    ${deleteLink}
+                                </td>
+                            `;
+                        });
+                    }
+
+                    studios = Array.isArray(data) ? data : [];
+                    loadStudioSelects();
+                })
+                .catch(error => {
+                    console.error('Error loading studios:', error);
+                    showError('Error loading studios: ' + error.message);
+                });
+        }
+
+        function handleStudioFormSubmit(event) {
+            event.preventDefault();
+            const studioId = document.getElementById('studioModalId').value;
+            const isUpdate = !!studioId;
+            const method = isUpdate ? 'PATCH' : 'POST';
+            const url = isUpdate ? `${STUDIO_API_URL}/${studioId}` : STUDIO_API_URL;
+            const formData = { name: document.getElementById('studioName').value };
+
+            fetch(url, {
+                method: method,
+                headers: getAuthHeaders(),
+                body: JSON.stringify(formData)
+            })
+            .then(async response => {
+                if (!response.ok) {
+                    let errorData = await response.json().catch(() => ({}));
+                    throw new Error(`Submission failed. Status: ${response.status}. ${errorData.message || ''}`);
+                }
+                return response.json();
+            })
+            .then(() => {
+                showSuccess(`Studio ${isUpdate ? 'updated' : 'created'} successfully!`);
+                closeStudioModal();
+                loadStudios();
+                loadStudioSelects();
+            })
+            .catch(error => showError('Error: ' + error.message));
+        }
+
+        function deleteStudio(id) {
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            if (confirm(`Are you sure you want to delete studio with ID ${id}?`)) {
+                fetch(`${STUDIO_API_URL}/${id}`, { method: 'DELETE', headers: getAuthHeaders() })
+                    .then(response => {
+                        if (response.ok) {
+                            showSuccess('Studio deleted successfully!');
+                            loadStudios();
+                            loadStudioSelects();
+                            loadBands(); // Bands might have changed their studio reference
+                        } else {
+                            throw new Error('Failed to delete studio. It might still contain bands.');
+                        }
+                    })
+                    .catch(error => showError(error.message));
+            }
+        }
+
+        // --- Album CRUD ---
+
+        function loadAlbums() {
+            const url = `${ALBUM_API_URL}?page=${currentAlbumPage}&size=10`;
+
+            fetch(url, { headers: getAuthHeaders() })
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#albumsTable tbody');
+                    tableBody.innerHTML = '';
+
+                    const isAdmin = CURRENT_USER_ROLE === 'ADMIN';
+                    const albumsList = data.content || [];
+
+                    albumsList.forEach(album => {
+                        const editLink = isAdmin
+                            ? `<a href="#" onclick="openEditAlbumModal(${album.id})">Edit</a>`
+                            : `<span style="color: #aaa;">Edit</span>`;
+
+                        const deleteLink = isAdmin
+                            ? `<a href="#" onclick="deleteAlbum(${album.id})" class="text-danger">Delete</a>`
+                            : `<span style="color: #aaa;">Delete</span>`;
+
+                        const row = tableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${album.id}</td>
+                            <td>${album.name}</td>
+                            <td>${album.tracks}</td>
+                            <td>${album.length.toFixed(2)}</td>
+                            <td>${album.sales.toFixed(2)}</td>
+                            <td>
+                                ${editLink}
+                                |
+                                ${deleteLink}
+                            </td>
+                        `;
+                    });
+
+                    currentAlbumPage = data.number;
+                    totalAlbumPages = data.totalPages;
+                    document.getElementById('albumPageInfo').textContent = `Page ${currentAlbumPage + 1} of ${totalAlbumPages}`;
+                    document.getElementById('prevAlbumPage').disabled = data.first;
+                    document.getElementById('nextAlbumPage').disabled = data.last;
+
+                    loadAlbumSelects();
+                })
+                .catch(error => console.error('Error loading albums:', error));
+        }
+
+        function handleAlbumFormSubmit(event) {
+            event.preventDefault();
+            const albumId = document.getElementById('albumModalId').value;
+            const isUpdate = !!albumId;
+            const method = isUpdate ? 'PATCH' : 'POST';
+            const url = isUpdate ? `${ALBUM_API_URL}/${albumId}` : ALBUM_API_URL;
+
+            const formData = {
+                name: document.getElementById('albumName').value,
+                tracks: parseInt(document.getElementById('albumTracks').value),
+                length: parseFloat(document.getElementById('albumLength').value),
+                sales: parseFloat(document.getElementById('albumSales').value) || 0
+            };
+
+            fetch(url, {
+                method: method,
+                headers: getAuthHeaders(),
+                body: JSON.stringify(formData)
+            })
+            .then(async response => {
+                if (!response.ok) {
+                    let errorData = await response.json().catch(() => ({}));
+                    throw new Error(`Submission failed. Status: ${response.status}. ${errorData.message || ''}`);
+                }
+                return response.json();
+            })
+            .then(() => {
+                showSuccess(`Album ${isUpdate ? 'updated' : 'created'} successfully!`);
+                closeAlbumModal();
+                loadAlbums();
+                loadBands(); // Bands might have changed best album reference
+            })
+            .catch(error => showError('Error: ' + error.message));
+        }
+
+        function deleteAlbum(id) {
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            if (confirm(`Are you sure you want to delete album with ID ${id}?`)) {
+                fetch(`${ALBUM_API_URL}/${id}`, { method: 'DELETE', headers: getAuthHeaders() })
+                    .then(response => {
+                        if (response.ok) {
+                            showSuccess('Album deleted successfully!');
+                            loadAlbums();
+                            loadBands();
+                        } else {
+                            throw new Error('Failed to delete album. It might be set as Best Album.');
+                        }
+                    })
+                    .catch(error => showError(error.message));
+            }
+        }
+
+        function changeAlbumPage(delta) {
+            const newPage = currentAlbumPage + delta;
+            if (newPage >= 0 && newPage < totalAlbumPages) {
+                currentAlbumPage = newPage;
+                loadAlbums();
+            }
+        }
+
+        // --- Special Operations ---
+
+        function handleDeleteByStudio(event) {
+            event.preventDefault();
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            const studioName = document.getElementById('studioNameToDelete').value;
+            if (!studioName) return showError('Please select a studio.');
+
+            fetch(`${API_URL}/by-studio?studioName=${encodeURIComponent(studioName)}`, { method: 'DELETE', headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(count => {
+                    showSuccess(`Deleted ${count} bands from studio: ${studioName}.`);
+                    loadBands();
+                })
+                .catch(error => showError('Error deleting: ' + error.message));
+        }
+
+        function handleAverageAlbums() {
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            fetch(`${API_URL}/average-album-count`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(data => {
+                    showInfo(`Average album count across all bands: ${data.average.toFixed(2)}`);
+                })
+                .catch(error => showError('Error fetching average: ' + error.message));
+        }
+
+        function handleCountStudio(event) {
+            event.preventDefault();
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            const studioName = document.getElementById('studioNameToCount').value;
+            if (!studioName) return showError('Please select a studio.');
+
+            // Исправляем логику для использования эндпоинта, если он существует
+            // Если эндпоинт count-by-studio?studioName={name} возвращает count > name, используем его.
+            // Предполагаем, что бэкенд имеет эндпоинт для этой логики:
+
+            fetch(`${API_URL}/count-by-studio?studioName=${encodeURIComponent(studioName)}`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(data => {
+                    // Предполагаем, что ответ - это объект { count: number }
+                    showInfo(`Found ${data.count} band(s) where studio name is lexicographically greater than '${studioName}'.`);
+                })
+                .catch(error => {
+                    // Если эндпоинт не найден, возвращаемся к старому логированию
+                    showError('Error fetching count: ' + error.message);
+                });
+        }
+
+        function handleFindByGenre(event) {
+            event.preventDefault();
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            const genre = document.getElementById('genreToFind').value;
+            if (!genre) return showError('Please select a genre.');
+
+            fetch(`${API_URL}/by-genre/${genre}`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(bands => {
+                    const names = bands.map(b => b.name).join(', ');
+                    showInfo(`Found ${bands.length} bands in ${genre}: ${names}`);
+                })
+                .catch(error => showError('Error searching by genre: ' + error.message));
+        }
+
+        function handleRemoveParticipant(event) {
+            event.preventDefault();
+            if (CURRENT_USER_ROLE !== 'ADMIN') return showError('Permission denied.');
+            const bandId = document.getElementById('bandIdToRemoveFrom').value;
+            if (!bandId) return showError('Please enter a Band ID.');
+
+            fetch(`${API_URL}/${bandId}/remove-participant`, { method: 'PATCH', headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(band => {
+                    showSuccess(`Participant removed from band ${band.name}. New count: ${band.numberOfParticipants}`);
+                    loadBands();
+                })
+                .catch(error => showError('Error removing participant: ' + error.message));
+        }
+
+        async function handleXmlImport(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('xmlFile');
+            const file = fileInput.files[0];
+            if (!file) { showError('⚠️ Пожалуйста, выберите XML файл для импорта.'); return; }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const authHeaders = getAuthHeaders('multipart/form-data');
+                const response = await fetch(XML_IMPORT_URL, {
+                    method: 'POST',
+                    headers: authHeaders,
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.imported > 0) {
+                        showSuccess(`✅ ${data.message || 'Импорт завершен успешно.'}`);
+                    } else {
+                        showInfo(`ℹ️ ${data.message || 'Импорт завершен, но группы не найдены.'}`);
+                    }
+                    fileInput.value = '';
+                    loadBands();
+                    loadImportHistory();
+                } else {
+                    let errorMsg = `Импорт не удался. Статус: ${response.status} ${response.statusText}`;
+                    try {
+                        const errorData = await response.json();
+                        if (errorData.error) { errorMsg = errorData.error; }
+                    } catch (e) {
+                        console.warn("Не удалось прочитать JSON из ответа об ошибке.");
+                    }
+                    throw new Error(errorMsg);
+                }
+            } catch (error) {
+                showError('❌ ' + error.message);
+                // ✅ ДОБАВЛЕНО: Обновляем историю после ошибки импорта
+                loadImportHistory();
+            }
+        }
+
+        // --- Import History ---
+
+        function loadImportHistory() {
+            const tableBody = document.querySelector('#importHistoryTable tbody');
+            tableBody.innerHTML = '<tr><td colspan="6">Загрузка истории...</td></tr>';
+
+            fetch(IMPORT_HISTORY_API_URL, { headers: getAuthHeaders() })
+                .then(response => {
+                    if (response.status === 401) {
+                        tableBody.innerHTML = '<tr><td colspan="6" style="color: orange;">🔒 Для просмотра истории требуется авторизация.</td></tr>';
+                        throw new Error('Unauthorized');
+                    }
+                    if (!response.ok) throw new Error('Failed to load history.');
+                    return response.json();
+                })
+                .then(data => {
+                    renderHistoryTable(data);
+                })
+                .catch(error => {
+                    if (error.message !== 'Unauthorized') {
+                         showError('Error loading import history: ' + error.message);
+                         tableBody.innerHTML = `<tr><td colspan="6" style="color: red;">Ошибка: ${error.message}</td></tr>`;
+                    }
+                });
+        }
+
+        function escapeJsString(str) {
+    if (str === null || str === undefined) return '';
+
+    return str.toString()
+              .replace(/\\/g, '\\\\')
+              .replace(/'/g, "\\'")
+              .replace(/\n/g, '\\n')
+              .replace(/\r/g, '');
+}
+
+        function renderHistoryTable(data) {
+            const tableBody = document.querySelector('#importHistoryTable tbody');
+            tableBody.innerHTML = '';
+
+            if (data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6">История импорта не найдена.</td></tr>';
+                return;
+            }
+
+            data.forEach(item => {
+                const row = tableBody.insertRow();
+
+                let statusClass = 'info-message';
+                if (item.status === 'SUCCESS') statusClass = 'success-message';
+                if (item.status === 'FAILED') statusClass = 'error-message';
+
+                const addedCount = item.status === 'SUCCESS' ? item.addedCount : 'N/A';
+
+        const safeErrorDetails = escapeJsString(item.errorDetails);
+
+        // Замените item.errorDetails в onclick на safeErrorDetails
+        const errorDetails = item.status === 'FAILED'
+            ? `<a href="#" class="text-danger" onclick="event.preventDefault(); alert('Error Details:\\n${safeErrorDetails}');">Details</a>`
+            : '';
+
+                const downloadCell = item.fileName
+    ? `<a href="/api/import-history/${item.id}/download" target="_blank">Скачать</a>`
+    : `<span>Недоступно</span>`;
+
+row.innerHTML = `
+    <td>${item.id}</td>
+    <td>${item.launchedByUsername}</td>
+    <td>${new Date(item.startTime * 1000).toLocaleString('ru-RU')}</td>
+    <td><span class="${statusClass}" style="padding: 5px 8px; border-radius: 3px; font-size: 0.9em; display: inline-block;">${item.status}</span></td>
+    <td>${addedCount}</td>
+    <td>${errorDetails}</td>
+    <td>${downloadCell}</td>
+`;
+            });
+        }
+
+        // --- НОВЫЕ ФУНКЦИИ УПРАВЛЕНИЯ ПОЛЬЗОВАТЕЛЯМИ ---
+
+        async function loadAllUsers() {
+            const tableBody = document.querySelector('#usersTable tbody');
+            const messageDiv = document.getElementById('userManagementMessage');
+            messageDiv.innerHTML = '';
+
+            if (CURRENT_USER_ROLE !== 'ADMIN') {
+                messageDiv.innerHTML = '<div class="error-message">❌ Доступ запрещен. Только для администраторов.</div>';
+                tableBody.innerHTML = '<tr><td colspan="4">Доступ запрещен.</td></tr>';
+                return;
+            }
+
+            tableBody.innerHTML = '<tr><td colspan="4"><div class="info-message">Загрузка пользователей...</div></td></tr>';
+
+            try {
+                const response = await fetch(USERS_API_URL, { headers: getAuthHeaders() });
+
+                if (response.status === 403) {
+                    throw new Error('У вас нет прав администратора для просмотра этого раздела.');
+                }
+                if (!response.ok) {
+                    throw new Error(`Ошибка загрузки: ${response.status} ${response.statusText}`);
+                }
+
+                const users = await response.json();
+                renderUsersTable(users);
+
+            } catch (error) {
+                messageDiv.innerHTML = `<div class="error-message">❌ Ошибка: ${error.message}</div>`;
+                tableBody.innerHTML = '<tr><td colspan="4">Ошибка загрузки.</td></tr>';
+            }
+        }
+
+        function renderUsersTable(users) {
+    const tableBody = document.querySelector('#usersTable tbody');
+    tableBody.innerHTML = '';
+
+    const adminCount = users.filter(u => u.role === 'ADMIN').length;
+
+    if (users.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="4">Пользователи не найдены.</td></tr>';
+        return;
+    }
+
+    users.forEach(user => {
+        // 🚨 ИСПРАВЛЕНИЕ ЗДЕСЬ: Пропускаем пользователя, если ID отсутствует (undefined/null/0)
+        if (!user.id) {
+            console.warn('Пропущен пользователь с некорректным ID:', user);
+            return;
+        }
+
+        const row = tableBody.insertRow();
+        const isCurrentUser = user.username === CURRENT_USERNAME;
+
+        // Не даём менять свою роль и не даём снимать последнюю роль ADMIN
+        const disableButton = isCurrentUser || (user.role === 'ADMIN' && adminCount === 1);
+
+        let buttonText = user.role === 'ADMIN' ? 'Сделать USER' : 'Сделать ADMIN';
+        let buttonTitle = '';
+        let buttonClass = user.role === 'ADMIN' ? 'btn-warning' : 'btn-success';
+
+        if (isCurrentUser) {
+            buttonTitle = 'Нельзя изменить свою роль';
+        } else if (user.role === 'ADMIN' && adminCount === 1) {
+            buttonTitle = 'Нельзя снять последнюю роль ADMIN';
+        }
+
+        row.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.username}${isCurrentUser ? ' (Вы)' : ''}</td>
+            <td><span style="font-weight: bold;">${user.role}</span></td>
+            <td>
+                <button
+                    onclick="updateUserRole(${user.id}, '${user.role}')"
+                    ${disableButton ? 'disabled' : ''}
+                    title="${buttonTitle}"
+                    class="${buttonClass}"
+                >
+                    ${buttonText}
+                </button>
+            </td>
+        `;
+    });
+}
+
+        async function updateUserRole(userId, currentRole) {
+            const newRole = currentRole === 'ADMIN' ? 'USER' : 'ADMIN';
+            const messageDiv = document.getElementById('userManagementMessage');
+            messageDiv.innerHTML = `<div class="info-message">Обновление роли пользователя #${userId} на ${newRole}...</div>`;
+
+            try {
+                // Предполагаем эндпоинт PATCH /api/users/{id}/role?newRole={role}
+                const response = await fetch(`${USERS_API_URL}/${userId}/role?newRole=${newRole}`, {
+                    method: 'PATCH',
+                    headers: getAuthHeaders()
+                });
+
+                if (response.ok) {
+                    messageDiv.innerHTML = `<div class="success-message">✅ Роль пользователя #${userId} успешно изменена на ${newRole}.</div>`;
+                    loadAllUsers(); // Перезагрузить таблицу
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    const errorMessage = errorData.message || `Ошибка при смене роли: ${response.status} ${response.statusText}`;
+                    throw new Error(errorMessage);
+                }
+            } catch (error) {
+                messageDiv.innerHTML = `<div class="error-message">❌ Ошибка: ${error.message}</div>`;
+            }
+        }
+        // --- /НОВЫЕ ФУНКЦИИ УПРАВЛЕНИЯ ПОЛЬЗОВАТЕЛЯМИ ---
+
+    </script>
+</body>
+</html>

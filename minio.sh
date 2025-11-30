@@ -1,0 +1,1 @@
+./minio server ~/minio-data --address ":9002" --console-address ":9001"

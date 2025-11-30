@@ -1,0 +1,74 @@
+package org.itmo.service;
+
+import jakarta.persistence.EntityNotFoundException;
+import org.itmo.dto.ImportHistoryResponseDto;
+import org.itmo.mapper.ImportHistoryMapper;
+import org.itmo.model.ImportHistory;
+import org.itmo.model.User;
+import org.itmo.repository.ImportHistoryRepository;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.transaction.PlatformTransactionManager; 
+import org.springframework.transaction.support.TransactionTemplate; 
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional(readOnly = true)
+public class ImportHistoryService {
+
+    private final ImportHistoryRepository historyRepository;
+    private final ImportHistoryMapper historyMapper;
+
+    private final TransactionTemplate transactionTemplate; 
+
+    public ImportHistoryService(ImportHistoryRepository historyRepository, ImportHistoryMapper historyMapper,
+                                PlatformTransactionManager transactionManager) {
+        this.historyRepository = historyRepository;
+        this.historyMapper = historyMapper;
+
+        
+        this.transactionTemplate = new TransactionTemplate(transactionManager);
+        this.transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
+    }
+
+    /**
+     * ✅ Новый метод: Сохраняет историю в новой, независимой транзакции.
+     * Это гарантирует, что запись будет закоммичена, даже если основной импорт откатится.
+     */
+    public ImportHistory saveHistoryInNewTransaction(ImportHistory history) {
+        return transactionTemplate.execute(status -> {
+            return historyRepository.save(history);
+        });
+    }
+
+    
+    public List<ImportHistoryResponseDto> getImportHistory(User currentUser, boolean isAdmin) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "startTime");
+
+        if (isAdmin) {
+            
+            return historyRepository.findAll(sort).stream()
+                    .map(historyMapper::toResponseDto) 
+                    .collect(Collectors.toList());
+        } else {
+            
+            if (currentUser == null) {
+                return List.of();
+            }
+            return historyRepository.findByLaunchedBy(currentUser, sort).stream()
+                    .map(historyMapper::toResponseDto) 
+                    .collect(Collectors.toList());
+        }
+    }
+
+    // src/main/java/org/itmo/service/ImportHistoryService.java
+    public ImportHistory findById(Long id) {
+        return historyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Import history not found with id: " + id));
+    }
+// Пометьте его как @Transactional(readOnly = true)
+}

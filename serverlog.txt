@@ -1,0 +1,2884 @@
+sasailin@MacBook-Air-Sasa-2 lab3 % ./update.sh
+(s381032@se.ifmo.ru) Password:
+lab1-2.0-SNAPSHOT-all.jar                                                                                                            100%   48MB 698.8KB/s   01:10
+sasailin@MacBook-Air-Sasa-2 lab3 %
+sasailin@MacBook-Air-Sasa-2 lab3 %
+sasailin@MacBook-Air-Sasa-2 lab3 %
+sasailin@MacBook-Air-Sasa-2 lab3 % ./p8080.sh
+(s381032@se.ifmo.ru) Password:
+Last login: Sun Nov 23 18:36:14 2025 from 38.180.44.15
+FreeBSD 14.3-STABLE (amd64) 5c37f7d22fa7
+
+Welcome to FreeBSD!
+
+[s381032@helios ~]$
+[s381032@helios ~]$
+[s381032@helios ~]$
+[s381032@helios ~]$
+[s381032@helios ~]$ java -jar  lab1-2.0-SNAPSHOT-all.jar
+Picked up _JAVA_OPTIONS: -XX:MaxHeapSize=1G -XX:MaxMetaspaceSize=128m
+Starting server on port: 8081
+[main] INFO org.eclipse.jetty.server.Server - jetty-11.0.24; built: 2024-08-26T18:11:22.448Z; git: 5dfc59a691b748796f922208956bd1f2794bcd16; jvm 17.0.12+7-1
+[main] WARN org.eclipse.jetty.server.handler.ContextHandler - BaseResource file:///home/studs/s381032/./src/main/webapp is aliased to file:///home/studs/s381032/src/main/webapp in o.e.j.w.WebAppContext@2473b9ce{/,file:///home/studs/s381032/./src/main/webapp,STOPPED}. May not be supported in future releases.
+[main] INFO org.eclipse.jetty.annotations.AnnotationConfiguration - Error:  for o.e.j.w.WebAppContext@2473b9ce{/,file:///home/studs/s381032/./src/main/webapp,STARTING}
+[main] INFO org.eclipse.jetty.server.session.DefaultSessionIdManager - Session workerName=node0
+[main] INFO org.eclipse.jetty.server.handler.ContextHandler.ROOT - Initializing Spring DispatcherServlet 'org.springframework.web.servlet.DispatcherServlet-5bcea91b'
+[main] INFO org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'org.springframework.web.servlet.DispatcherServlet-5bcea91b'
+[main] INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[main] INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 66 ms. Found 6 JPA repository interfaces.
+[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[main] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@69228e85
+[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+нояб. 23, 2025 7:12:10 PM org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
+INFO: HHH000204: Processing PersistenceUnitInfo [name: my-persistence-unit]
+нояб. 23, 2025 7:12:10 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate ORM core version [WORKING]
+нояб. 23, 2025 7:12:10 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+INFO: HHH000026: Second-level cache disabled
+[main] INFO org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+нояб. 23, 2025 7:12:28 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using built-in connection pool (not intended for production use)
+нояб. 23, 2025 7:12:28 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: Loaded JDBC driver class: org.postgresql.Driver
+нояб. 23, 2025 7:12:28 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001012: Connecting with JDBC URL [jdbc:postgresql://localhost:5432/studs]
+нояб. 23, 2025 7:12:28 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {password=****, user=s381032}
+нояб. 23, 2025 7:12:28 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+нояб. 23, 2025 7:12:28 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH10001115: Connection pool size: 20 (min=1)
+нояб. 23, 2025 7:12:28 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+WARN: HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+нояб. 23, 2025 7:12:29 PM org.hibernate.validator.internal.util.Version <clinit>
+INFO: HV000001: Hibernate Validator null
+нояб. 23, 2025 7:12:29 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[main] INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'my-persistence-unit'
+[main] INFO org.itmo.config.DataInitializer - -> Starting data initialization...
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[main] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 220 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+Hibernate:
+    update
+        app_user
+    set
+        password_hash=?,
+        role=?,
+        username=?
+    where
+        id=?
+[main] INFO org.itmo.config.DataInitializer - Updated password for user: admin with role ADMIN
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[main] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+Hibernate:
+    update
+        app_user
+    set
+        password_hash=?,
+        role=?,
+        username=?
+    where
+        id=?
+[main] INFO org.itmo.config.DataInitializer - Updated password for user: admin2 with role ADMIN
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[main] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+Hibernate:
+    update
+        app_user
+    set
+        password_hash=?,
+        role=?,
+        username=?
+    where
+        id=?
+[main] INFO org.itmo.config.DataInitializer - Updated password for user: user with role USER
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[main] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+Hibernate:
+    update
+        app_user
+    set
+        password_hash=?,
+        role=?,
+        username=?
+    where
+        id=?
+[main] INFO org.itmo.config.DataInitializer - Updated password for user: user2 with role USER
+[main] INFO org.itmo.config.DataInitializer - -> Data initialization complete. All required test users created/verified.
+[main] INFO org.springframework.data.jpa.repository.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+[main] INFO org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userService
+[main] INFO org.springframework.validation.beanvalidation.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.ValidationException: HV000183: Unable to initialize 'jakarta.el.ExpressionFactory'. Check that you have the EL dependencies on the classpath, or use ParameterMessageInterpolator instead
+[main] INFO org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler - Starting...
+[main] INFO org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7fd4f280]]
+[main] INFO org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler - Started.
+[main] INFO org.springframework.web.servlet.DispatcherServlet - Completed initialization in 36918 ms
+[main] INFO org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.w.WebAppContext@2473b9ce{/,file:///home/studs/s381032/./src/main/webapp,AVAILABLE}
+[main] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@532760d8{HTTP/1.1, (http/1.1)}{0.0.0.0:8081}
+[main] INFO org.eclipse.jetty.server.Server - Started Server@87f383f{STARTING}[11.0.24,sto=0] @37433ms
+f
+f
+f
+[MessageBroker-1] INFO org.springframework.web.socket.config.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+[qtp2052001577-25] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-25] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-25] ERROR org.itmo.service.UserService - User not found: 'sasha'
+[qtp2052001577-23] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-23] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-23] ERROR org.itmo.service.UserService - User not found: 'sasha'
+[qtp2052001577-26] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] ERROR org.itmo.service.UserService - User not found: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-27] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-27] INFO org.itmo.service.UserService - Регистрация нового пользователя: 'sasha'
+Hibernate:
+    insert
+    into
+        app_user
+        (password_hash, role, username)
+    values
+        (?, ?, ?)
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-23] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-23] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        mb1_0.id,
+        mb1_0.album_count,
+        mb1_0.best_album_id,
+        mb1_0.coordinates_id,
+        mb1_0.creation_date,
+        mb1_0.description,
+        mb1_0.establishment_date,
+        mb1_0.genre,
+        mb1_0.name,
+        mb1_0.number_of_participants,
+        mb1_0.single_count,
+        mb1_0.studio_id,
+        mb1_0.version
+    from
+        music_band mb1_0
+    order by
+        mb1_0.id
+    offset
+        ? rows
+    fetch
+        first ? rows only
+[qtp2052001577-29] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-29] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 5 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+[qtp2052001577-40] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+[qtp2052001577-26] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 4 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+[qtp2052001577-29] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 42 ms. Check JPA logs for hits/misses.
+[qtp2052001577-29] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 44 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    where
+        ih1_0.launched_by_id=?
+    order by
+        ih1_0.start_time desc
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryRepository.findByLaunchedBy(..) in 12 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 14 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        count(mb1_0.id)
+    from
+        music_band mb1_0
+[qtp2052001577-23] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 252 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+[qtp2052001577-43] WARN org.eclipse.jetty.server.HttpChannel - /ws/206/bushr2w1/websocket
+jakarta.servlet.ServletException: Request processing failed: org.springframework.web.socket.sockjs.SockJsException: Uncaught failure in SockJS request, uri=http://0.0.0.0:8081/ws/206/bushr2w1/websocket
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1022)
+        at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:500)
+        at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:587)
+        at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:764)
+        at org.eclipse.jetty.servlet.ServletHandler$ChainEnd.doFilter(ServletHandler.java:1665)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+        at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+        at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+        at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+        at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilterInternal(BasicAuthenticationFilter.java:181)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+        at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+        at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+        at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+        at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+        at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+        at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+        at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+        at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+        at org.eclipse.jetty.servlet.FilterHolder.doFilter(FilterHolder.java:202)
+        at org.eclipse.jetty.servlet.ServletHandler$Chain.doFilter(ServletHandler.java:1635)
+        at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:527)
+        at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:131)
+        at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:598)
+        at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:223)
+        at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1580)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:221)
+        at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1381)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:176)
+        at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:484)
+        at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1553)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:174)
+        at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1303)
+        at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:129)
+        at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+        at org.eclipse.jetty.server.Server.handle(Server.java:563)
+        at org.eclipse.jetty.server.HttpChannel$RequestDispatchable.dispatch(HttpChannel.java:1598)
+        at org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:753)
+        at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:501)
+        at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:287)
+        at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:314)
+        at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100)
+        at org.eclipse.jetty.io.SelectableChannelEndPoint$1.run(SelectableChannelEndPoint.java:53)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.run(AdaptiveExecutionStrategy.java:199)
+        at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:411)
+        at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:969)
+        at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.doRunJob(QueuedThreadPool.java:1194)
+        at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1149)
+        at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.springframework.web.socket.sockjs.SockJsException: Uncaught failure in SockJS request, uri=http://0.0.0.0:8081/ws/206/bushr2w1/websocket
+        at org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler.handleRequest(SockJsHttpRequestHandler.java:137)
+        at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52)
+        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+        ... 94 more
+Caused by: org.springframework.web.socket.sockjs.SockJsTransportFailureException: WebSocket handshake failure
+        at org.springframework.web.socket.sockjs.transport.handler.WebSocketTransportHandler.handleRequest(WebSocketTransportHandler.java:129)
+        at org.springframework.web.socket.sockjs.transport.TransportHandlingSockJsService.handleTransportRequest(TransportHandlingSockJsService.java:318)
+        at org.springframework.web.socket.sockjs.support.AbstractSockJsService.handleRequest(AbstractSockJsService.java:487)
+        at org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler.handleRequest(SockJsHttpRequestHandler.java:134)
+        ... 98 more
+Caused by: java.lang.IllegalArgumentException: No 'jakarta.websocket.server.ServerContainer' ServletContext attribute. Are you running in a Servlet container that supports JSR-356?
+        at org.springframework.util.Assert.notNull(Assert.java:181)
+        at org.springframework.web.socket.server.standard.AbstractStandardUpgradeStrategy.getContainer(AbstractStandardUpgradeStrategy.java:70)
+        at org.springframework.web.socket.server.standard.AbstractStandardUpgradeStrategy.getSupportedExtensions(AbstractStandardUpgradeStrategy.java:91)
+        at org.springframework.web.socket.server.support.AbstractHandshakeHandler.doHandshake(AbstractHandshakeHandler.java:261)
+        at org.springframework.web.socket.sockjs.transport.handler.WebSocketTransportHandler.handleRequest(WebSocketTransportHandler.java:125)
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+        ... 101 more
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 8 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 10 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-25] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-25] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-45] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 4 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        mb1_0.id,
+        mb1_0.album_count,
+        mb1_0.best_album_id,
+        mb1_0.coordinates_id,
+        mb1_0.creation_date,
+        mb1_0.description,
+        mb1_0.establishment_date,
+        mb1_0.genre,
+        mb1_0.name,
+        mb1_0.number_of_participants,
+        mb1_0.single_count,
+        mb1_0.studio_id,
+        mb1_0.version
+    from
+        music_band mb1_0
+    order by
+        mb1_0.id
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+[qtp2052001577-25] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 6 ms. Check JPA logs for hits/misses.
+[qtp2052001577-25] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 6 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        count(mb1_0.id)
+    from
+        music_band mb1_0
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 29 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-23] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-23] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+[qtp2052001577-23] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-23] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-25] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-25] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-25] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-25] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    where
+        ih1_0.launched_by_id=?
+    order by
+        ih1_0.start_time desc
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryRepository.findByLaunchedBy(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    where
+        ih1_0.launched_by_id=?
+    order by
+        ih1_0.start_time desc
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryRepository.findByLaunchedBy(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-27] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-27] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-27] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-27] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-47] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-47] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-47] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-47] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-47] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-47] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-47] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-47] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    where
+        ih1_0.launched_by_id=?
+    order by
+        ih1_0.start_time desc
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryRepository.findByLaunchedBy(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-40] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    where
+        ih1_0.launched_by_id=?
+    order by
+        ih1_0.start_time desc
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryRepository.findByLaunchedBy(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-46] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-46] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-46] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-46] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'sasha'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-27] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-27] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        mb1_0.id,
+        mb1_0.album_count,
+        mb1_0.best_album_id,
+        mb1_0.coordinates_id,
+        mb1_0.creation_date,
+        mb1_0.description,
+        mb1_0.establishment_date,
+        mb1_0.genre,
+        mb1_0.name,
+        mb1_0.number_of_participants,
+        mb1_0.single_count,
+        mb1_0.studio_id,
+        mb1_0.version
+    from
+        music_band mb1_0
+    order by
+        mb1_0.id
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        count(mb1_0.id)
+    from
+        music_band mb1_0
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 20 ms. Check JPA logs for hits/misses.
+[qtp2052001577-61] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+[qtp2052001577-43] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+[qtp2052001577-41] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-61] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    order by
+        ih1_0.start_time desc
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-61] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListPagingAndSortingRepository.findAll(..) in 12 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+[qtp2052001577-61] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 17 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-44] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-29] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-29] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-47] WARN org.eclipse.jetty.server.HttpChannel - /ws/698/3ai2jikz/websocket
+jakarta.servlet.ServletException: Request processing failed: org.springframework.web.socket.sockjs.SockJsException: Uncaught failure in SockJS request, uri=http://0.0.0.0:8081/ws/698/3ai2jikz/websocket
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1022)
+        at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:500)
+        at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:587)
+        at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:764)
+        at org.eclipse.jetty.servlet.ServletHandler$ChainEnd.doFilter(ServletHandler.java:1665)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+        at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+        at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+        at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+        at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilterInternal(BasicAuthenticationFilter.java:181)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+        at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+        at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+        at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+        at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+        at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+        at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+        at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+        at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+        at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+        at org.eclipse.jetty.servlet.FilterHolder.doFilter(FilterHolder.java:202)
+        at org.eclipse.jetty.servlet.ServletHandler$Chain.doFilter(ServletHandler.java:1635)
+        at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:527)
+        at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:131)
+        at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:598)
+        at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:223)
+        at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1580)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:221)
+        at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1381)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:176)
+        at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:484)
+        at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1553)
+        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:174)
+        at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1303)
+        at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:129)
+        at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:122)
+        at org.eclipse.jetty.server.Server.handle(Server.java:563)
+        at org.eclipse.jetty.server.HttpChannel$RequestDispatchable.dispatch(HttpChannel.java:1598)
+        at org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:753)
+        at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:501)
+        at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:287)
+        at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:314)
+        at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:100)
+        at org.eclipse.jetty.io.SelectableChannelEndPoint$1.run(SelectableChannelEndPoint.java:53)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.runTask(AdaptiveExecutionStrategy.java:421)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.consumeTask(AdaptiveExecutionStrategy.java:390)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce(AdaptiveExecutionStrategy.java:277)
+        at org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.run(AdaptiveExecutionStrategy.java:199)
+        at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:411)
+        at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:969)
+        at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.doRunJob(QueuedThreadPool.java:1194)
+        at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1149)
+        at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.springframework.web.socket.sockjs.SockJsException: Uncaught failure in SockJS request, uri=http://0.0.0.0:8081/ws/698/3ai2jikz/websocket
+        at org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler.handleRequest(SockJsHttpRequestHandler.java:137)
+        at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52)
+        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+        ... 94 more
+Caused by: org.springframework.web.socket.sockjs.SockJsTransportFailureException: WebSocket handshake failure
+        at org.springframework.web.socket.sockjs.transport.handler.WebSocketTransportHandler.handleRequest(WebSocketTransportHandler.java:129)
+        at org.springframework.web.socket.sockjs.transport.TransportHandlingSockJsService.handleTransportRequest(TransportHandlingSockJsService.java:318)
+        at org.springframework.web.socket.sockjs.support.AbstractSockJsService.handleRequest(AbstractSockJsService.java:487)
+        at org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler.handleRequest(SockJsHttpRequestHandler.java:134)
+        ... 98 more
+Caused by: java.lang.IllegalArgumentException: No 'jakarta.websocket.server.ServerContainer' ServletContext attribute. Are you running in a Servlet container that supports JSR-356?
+        at org.springframework.util.Assert.notNull(Assert.java:181)
+        at org.springframework.web.socket.server.standard.AbstractStandardUpgradeStrategy.getContainer(AbstractStandardUpgradeStrategy.java:70)
+        at org.springframework.web.socket.server.standard.AbstractStandardUpgradeStrategy.getSupportedExtensions(AbstractStandardUpgradeStrategy.java:91)
+        at org.springframework.web.socket.server.support.AbstractHandshakeHandler.doHandshake(AbstractHandshakeHandler.java:261)
+        at org.springframework.web.socket.sockjs.transport.handler.WebSocketTransportHandler.handleRequest(WebSocketTransportHandler.java:125)
+        ... 101 more
+Hibernate:
+    select
+        mb1_0.id,
+        mb1_0.album_count,
+        mb1_0.best_album_id,
+        mb1_0.coordinates_id,
+        mb1_0.creation_date,
+        mb1_0.description,
+        mb1_0.establishment_date,
+        mb1_0.genre,
+        mb1_0.name,
+        mb1_0.number_of_participants,
+        mb1_0.single_count,
+        mb1_0.studio_id,
+        mb1_0.version
+    from
+        music_band mb1_0
+    order by
+        mb1_0.id
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    where
+        a1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-44] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        c1_0.id,
+        c1_0.x,
+        c1_0.y
+    from
+        coordinates c1_0
+    where
+        c1_0.id=?
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+Hibernate:
+    select
+        count(mb1_0.id)
+    from
+        music_band mb1_0
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 22 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+[qtp2052001577-29] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-29] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-40] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-40] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        a1_0.id,
+        a1_0.length,
+        a1_0.name,
+        a1_0.sales,
+        a1_0.tracks
+    from
+        album a1_0
+    offset
+        ? rows
+    fetch
+        first ? rows only
+Hibernate:
+    select
+        count(a1_0.id)
+    from
+        album a1_0
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed PagingAndSortingRepository.findAll(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed AlbumService.getAll(..) in 3 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-41] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-26] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+[qtp2052001577-26] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-45] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    order by
+        ih1_0.start_time desc
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListPagingAndSortingRepository.findAll(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        ih1_0.id,
+        ih1_0.added_count,
+        ih1_0.end_time,
+        ih1_0.error_details,
+        ih1_0.launched_by_id,
+        ih1_0.start_time,
+        ih1_0.status
+    from
+        import_history ih1_0
+    order by
+        ih1_0.start_time desc
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListPagingAndSortingRepository.findAll(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.id=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ImportHistoryService.getImportHistory(..) in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-45] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-45] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 1 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-45] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 1 ms. Check JPA logs for hits/misses.
+[qtp2052001577-43] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed CrudRepository.findById(..) in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getById(..) in 4 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed CrudRepository.findById(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+    where
+        s1_0.id=?
+[qtp2052001577-43] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-43] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 3 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-28] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.service.UserService - Attempting to load user by username: 'admin'
+Hibernate:
+    select
+        u1_0.id,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.username
+    from
+        app_user u1_0
+    where
+        u1_0.username=?
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed UserRepository.findByUsername(..) in 2 ms. Check JPA logs for hits/misses.
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.name
+    from
+        studio s1_0
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed ListCrudRepository.findAll() in 2 ms. Check JPA logs for hits/misses.
+[qtp2052001577-24] INFO org.itmo.aop.CacheLoggerAspect - AOP CACHE LOG: Executed StudioService.getAll() in 2 ms. Check JPA logs for hits/misses.

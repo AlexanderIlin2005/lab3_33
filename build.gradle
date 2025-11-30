@@ -1,0 +1,152 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // для fat jar
+}
+
+application {
+    mainClass = 'org.itmo.Main' // укажи свой entry point (класс с main)
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass
+        )
+    }
+}
+
+tasks.named('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass,
+                'Web-App-Runner-Class': application.mainClass,
+                'Class-Path': '.',
+                'Scan-Classpaths': 'true'
+        )
+    }
+}
+
+
+group 'ru.itmo.studs'
+version '2.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springVersion = '6.2.10'
+    springSecurityVersion = '6.5.3'
+    thymeleafVersion = '3.1.2.RELEASE'
+    // eclipselinkVersion удален
+    hibernateVersion = '6.4.4.Final' // Новая версия Hibernate, совместимая с Jakarta Persistence API 3.1
+    jakartaPersistenceVersion = '3.1.0' // JPA API
+    postgresqlVersion = '42.7.3'
+    jakartaServletVersion = '6.0.0'
+    jacksonVersion = '2.17.1' // Убедитесь, что эта версия соответствует остальным
+}
+
+dependencies {
+    // Spring Core & MVC
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "org.springframework:spring-orm:${springVersion}"
+
+// Spring Security для аутентификации и авторизации
+    implementation "org.springframework.security:spring-security-web:${springSecurityVersion}"
+    implementation "org.springframework.security:spring-security-config:${springSecurityVersion}"
+    implementation "org.springframework.security:spring-security-taglibs:${springSecurityVersion}"
+
+// Thymeleaf для UI
+    implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
+    implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafVersion}"
+
+// JPA (Hibernate) для работы с БД
+    implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
+    implementation "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceVersion}"
+
+// ВОССТАНОВЛЕНИЕ JAXB: Зависимости для работы с XML-биндингом (jakarta.xml.bind.*)
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:4.0.4'
+
+// Драйвер PostgreSQL
+    implementation "org.postgresql:postgresql:${postgresqlVersion}"
+
+// Для валидации
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0-M1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.0-M1'
+
+    implementation 'org.springframework.data:spring-data-jpa:3.3.1'
+
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+// MapStruct для маппинга DTO <-> Entity
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    implementation 'org.eclipse.jetty:jetty-server:11.0.24'
+    implementation 'org.eclipse.jetty:jetty-servlet:11.0.24'
+    implementation 'org.eclipse.jetty:jetty-webapp:11.0.24'
+
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'org.slf4j:slf4j-simple:2.0.9'
+
+    // Jackson для JSON-маппинга
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.17.1'
+
+    // WebSocket и STOMP для Real-Time обновлений
+    implementation "org.springframework:spring-websocket:${springVersion}"
+    implementation "org.springframework:spring-messaging:${springVersion}"
+
+    // Явно добавляем Jakarta WebSocket API 2.1.1 для совместимости со Spring 6.x
+    implementation 'jakarta.websocket:jakarta.websocket-api:2.1.1'
+
+    // Зависимости для WEBSOCKET И JAKARTA (Jetty 11)
+    implementation 'org.eclipse.jetty.websocket:websocket-jakarta-server:11.0.24'
+    implementation 'org.eclipse.jetty.websocket:websocket-jakarta-client:11.0.24'
+
+    implementation 'org.eclipse.jetty:jetty-annotations:11.0.24'
+    implementation 'org.eclipse.jetty:jetty-plus:11.0.24'
+    implementation 'org.eclipse.jetty:jetty-util:11.0.24'
+
+    // ✅ HikariCP Connection Pool
+    implementation 'com.zaxxer:HikariCP:5.1.0'
+
+    // ✅ Ehcache Core
+    implementation 'org.ehcache:ehcache:3.10.8'
+    // JCache API (JSR-107) — требуется для Ehcache как JCache Provider
+    // Примечание: 'javax.cache' - это старый API, но он может потребоваться для совместимости с Ehcache.
+    implementation 'javax.cache:cache-api:1.1.1'
+
+    implementation 'org.hibernate.orm:hibernate-jcache:6.4.4.Final' // <-- Добавить эту строку
+
+
+    // Исключаем костыль для JTA, так как перешли на Hibernate
+    implementation 'org.eclipse.jetty:jetty-plus:11.0.24'
+
+
+    // ✅ Spring AOP (для логирования статистики)
+    implementation "org.springframework:spring-aop:${springVersion}"
+    implementation 'org.aspectj:aspectjweaver:1.9.21'
+
+    //MiniO
+    implementation 'io.minio:minio:8.5.7'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+war {
+    archiveFileName = 'route-manager.war'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs = ['-parameters']
+}

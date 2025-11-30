@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+        xsi:schemaLocation="
+            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.10.xsd
+            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.10.xsd">
+
+    <!-- Включение JMX для управления и сбора статистики -->
+    <service>
+        <jsr107:defaults enable-management="true" enable-statistics="true"/>
+    </service>
+
+    <cache alias="org.itmo.model.MusicBand">
+        <key-type>java.lang.Long</key-type>
+        <value-type>org.itmo.model.MusicBand</value-type>
+        <expiry><ttl unit="seconds">300</ttl></expiry>
+        <resources><heap unit="entries">500</heap></resources>
+    </cache>
+
+    <cache alias="org.itmo.model.MusicBand.albums">
+        <key-type>java.lang.Object</key-type>
+        <value-type>java.util.List</value-type>
+        <expiry><ttl unit="seconds">180</ttl></expiry>
+        <resources><heap unit="entries">200</heap></resources>
+    </cache>
+
+</config>
