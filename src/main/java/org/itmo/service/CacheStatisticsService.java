@@ -1,4 +1,3 @@
-// src/main/java/org/itmo/service/CacheStatisticsService.java
 package org.itmo.service;
 
 import org.hibernate.stat.Statistics;
